@@ -15,11 +15,27 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        $this->call(RolePermissionSeeder::class);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
+        // Akun demo hanya dibuat untuk pengembangan dan evaluasi lokal.
+        if (app()->environment(['local', 'testing'])) {
+            foreach (['Admin' => 'admin', 'Staf' => 'staf'] as $role => $akun) {
+                $user = User::firstOrCreate(
+                    ['email' => $akun.'@akademik.test'],
+                    [
+                        'name' => $role.' Demo',
+                        'password' => 'password', // Cast hashed pada User mengenkripsi ini.
+                    ],
+                );
+
+                if ($user->wasRecentlyCreated) {
+                    $user->forceFill(['email_verified_at' => now()])->save();
+                }
+
+                $user->syncRoles([$role]);
+            }
+
+            $this->call(AcademicSeeder::class);
+        }
     }
 }

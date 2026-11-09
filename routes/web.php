@@ -1,7 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\DemoLoginController;
+use App\Http\Controllers\CalculatorController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PageController;
+use Illuminate\Support\Facades\Route;
 
 // ─────────────────────────────────────────────────────────────
 // Tiga rute utama tugas — semua melalui PageController
@@ -24,17 +28,28 @@ Route::get('/ide-agent', [PageController::class, 'ideAgent'])->name('ide-agent')
 Route::get('/agent/{tema?}', [PageController::class, 'agent'])->name('agent.idea');
 
 // Kalkulator IPK
-Route::get('/hitung-ipk/{ip1}/{ip2}', [App\Http\Controllers\CalculatorController::class, 'hitungIpk']);
+Route::get('/hitung-ipk/{ip1}/{ip2}', [CalculatorController::class, 'hitungIpk']);
 
 // Dashboard group (warisan)
-Route::prefix('dashboard')->name('dashboard.')->group(function () {
+Route::prefix('dashboard')->name('dashboard.')->middleware(['auth', 'verified', 'permission:lihat dashboard'])->group(function () {
     Route::get('/about', [PageController::class, 'about'])->name('about');
     Route::get('/mahasiswa/{nrp}', [PageController::class, 'mahasiswaDetail'])
         ->where('nrp', '[0-9]{10}') // validasi format NRP
         ->name('mahasiswa.detail');
 });
 
-// Fallback 404
-Route::fallback(function () {
-    return view('errors.404');
+// Backoffice: autentikasi Breeze, verifikasi email, lalu permission controller.
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('mahasiswa', MahasiswaController::class)->except('show');
+    });
 });
+
+Route::post('/demo-login/{account}', DemoLoginController::class)
+    ->whereIn('account', ['admin', 'staf'])
+    ->middleware(['guest', 'throttle:6,1'])
+    ->name('demo.login');
+
+require __DIR__.'/auth.php';

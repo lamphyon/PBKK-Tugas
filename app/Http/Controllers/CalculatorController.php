@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class CalculatorController extends Controller
 {
-    public function hitungIpk($ip1, $ip2)
+    public function hitungIpk(string $ip1, string $ip2): View
     {
         // Konversi input ke float
         $ip1 = (float) $ip1;

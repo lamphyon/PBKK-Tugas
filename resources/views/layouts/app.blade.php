@@ -53,6 +53,10 @@
                    class="{{ request()->routeIs('ide-agent') ? 'text-emerald-400' : 'text-gray-400 hover:text-gray-200' }} transition">
                     Ide-Riset
                 </a>
+                <a href="{{ auth()->check() ? route('dashboard') : route('login') }}"
+                   class="text-emerald-400 hover:text-emerald-300 transition">
+                    {{ auth()->check() ? 'Dashboard' : 'Login' }}
+                </a>
             </div>
 
         </div>
