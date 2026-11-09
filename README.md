@@ -181,3 +181,24 @@ production perlu disiapkan sendiri oleh pengelola aplikasi.
 - [Laravel Breeze — scaffolding autentikasi](https://github.com/laravel/breeze)
 - [Laravel-AdminLTE — dokumentasi paket](https://jeroennoten.github.io/Laravel-AdminLTE/)
 - [Spatie Laravel Permission — kompatibilitas dan prasyarat](https://spatie.be/docs/laravel-permission/v7/prerequisites)
+
+
+# Screenshots
+
+/login
+
+<img width="1855" height="1050" alt="image" src="https://github.com/user-attachments/assets/e80a2aba-6276-42bd-a750-d3686d2b50a9" />
+
+/dashboard
+
+<img width="1855" height="1050" alt="image" src="https://github.com/user-attachments/assets/142baaea-900a-49ce-8af9-a497aa697173" />
+
+/admin/mahasiswa
+
+<img width="1855" height="1050" alt="image" src="https://github.com/user-attachments/assets/9670ddb1-cef0-4edb-8183-c2cb3f738378" />
+
+/admin/mahasiswa/create (dan bisa CRUD lain seperti di gambar sebelumnya)
+
+<img width="1855" height="1050" alt="image" src="https://github.com/user-attachments/assets/522ab593-bc0a-4271-9a8a-353bb39d70b9" />
+
+
